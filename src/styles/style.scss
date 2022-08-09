@@ -1,0 +1,78 @@
+@import 'config';
+@import '_filter';
+@import 'tickets';
+
+body {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    background: #F3F7FA;
+    font-weight: 600;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 754px;
+    margin: auto;
+    padding: auto;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 784px) {
+    
+    main {
+        flex-direction: column;
+    }
+
+    .container {
+        padding: 0 1.2rem;
+    }
+
+    .filter {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 0;
+
+        ul {
+            max-width: none;
+            width: 50%;
+            flex-grow: 1;
+           
+            &:first-child {
+                margin-right: 1.2rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 538px) {
+    .filter {
+        flex-direction: column;
+
+        ul {
+            width: auto;
+
+            &:first-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    .tickets {
+        min-width: auto;
+    }
+}
