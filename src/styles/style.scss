@@ -1,6 +1,7 @@
 @import 'config';
 @import '_filter';
 @import 'tickets';
+@import 'select';
 
 body {
     box-sizing: border-box;
@@ -31,14 +32,14 @@ main {
     justify-content: space-between;
 }
 
-@media screen and (max-width: 784px) {
+@media screen and (max-width: 770px) {
     
     main {
         flex-direction: column;
     }
 
     .container {
-        padding: 0 1.2rem;
+        padding: 0 1rem;
     }
 
     .filter {
@@ -60,6 +61,10 @@ main {
 }
 
 @media screen and (max-width: 538px) {
+    .select {
+        flex-wrap: wrap;
+    }
+    
     .filter {
         flex-direction: column;
 

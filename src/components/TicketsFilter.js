@@ -1,9 +1,10 @@
 import React from 'react';
 
-const TicketsFilter = () => {
+const TicketsFilter = ({ chooseCheap }) => {
+  
   return (
     <div className="tickets-filter">
-        <button>САМЫЙ ДЕШЕВЫЙ</button>
+        <button onClick={chooseCheap}>САМЫЙ ДЕШЕВЫЙ</button>
         <button>САМЫЙ БЫСТРЫЙ</button>
         <button>ОПТИМАЛЬНЫЙ</button>
     </div>

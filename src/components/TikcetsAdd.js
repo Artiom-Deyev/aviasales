@@ -1,8 +1,9 @@
 import React from 'react';
 
-const TikcetsAdd = () => {
+const TikcetsAdd = ({ clickHandler }) => {
+  //console.log(clickHandler)
   return (
-    <button className="tickets-add">ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ</button>
+    <button onClick={clickHandler} className="tickets-add">ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ</button>
   )
 }
 
