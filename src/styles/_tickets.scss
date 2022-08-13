@@ -1,0 +1,91 @@
+.tickets {
+    min-width: 502px;
+    margin-bottom: 1.2rem;
+
+    &-filter {
+        display: flex;
+        justify-content: space-evenly;
+
+        button {
+            border: 1px solid #DFE5EC;
+            border-right: none;
+            flex-grow: 1;
+            background-color: $white-color;
+            padding: 1rem;
+            margin: 0;
+            cursor: pointer;
+
+            &:last-child {
+                border-right: 1px solid #DFE5EC;
+            }
+
+            &:hover {
+                background-color: $hover-color;
+            }           
+        }
+    }
+
+    &-item {
+        display: flex;
+        flex-direction: column;
+        margin: 1.2rem 0;
+        background-color: $white-color;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        transform: scale(1);
+
+        &:hover {
+            transform: scale(1.05);
+            transition: all 0.5s;
+        }
+
+        &-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.4rem 1.2rem;
+
+            p {
+                font-style: normal;
+                font-weight: 600;
+                font-size: 24px;
+                line-height: 24px;
+                display: flex;
+                align-items: center;
+                color: $secondary-color;
+            }
+        }
+
+        &-details {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1.2rem 1.2rem;
+
+            p {
+                font-style: normal;
+                font-weight: 600;
+                font-size: 12px;
+                line-height: 18px;
+                color: #A0B0B9;
+
+                span {
+                    font-size: 14px;
+                    line-height: 21px;
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+
+    &-add {
+        //flex-grow: 1;
+        color: $white-color;
+        border: none;
+        border-radius: 5px;
+        width: 100%;
+        background-color: $secondary-color;
+        padding: 1rem 0;
+
+    }
+}
