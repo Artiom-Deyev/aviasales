@@ -1,55 +1,58 @@
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addIncrease } from './components/addState';
 import Header from './components/Header';
 import Filter from './components/Filter';
 import TicketsFilter from './components/TicketsFilter';
-import TicketsItem from './components/TicketsItem';
+import TicketsList from './components/TicketsList';
 import TikcetsAdd from './components/TikcetsAdd';
 import TicketsDates from './components/TicketsDates';
 import axios from 'axios';
 
 function App() {
 
-  const [ticketsNum, setTicketsNum ] = useState(5);
   const [tickets, setTickets ] = useState([]);
   const [sortedTickets, setSortedTickets] = useState([]);
 
-  useEffect(() => {
-    axios.get('https://api.npoint.io/163b5e66df9f2741243e')
-    .then((response) => setTickets(response.data))
-    .then(console.log(tickets))
-    .catch(function (error) {
-    console.log(error);
-  })}, [])
+  //Adding more tickets
+  const dispatch = useDispatch();
 
-  const clickHandler = () => {setTicketsNum(state => state += 5); console.log(ticketsNum)}
+  const clickHandler = () => {
+    dispatch(addIncrease());
+  }
 
+  //Filter
   const chooseCheap = () => {
     let newTickets = tickets.sort((prev, next) => prev.price - next.price);
     setSortedTickets(newTickets);
+  }
+
+  const chooseTrans = (e) => {
+    let num = parseInt(e.target.id.substr(6));
+    let newTickets = tickets.filter((ticket) => ticket.info.stops.length === num);
+    console.log(newTickets)
+    setTickets(newTickets);
   }
 
   useEffect(() => {
     setTickets(sortedTickets);
   }, []);
 
-  return (
-    <div className="container">
-      <Header />
-      <TicketsDates />
-      <main>
-        <Filter />
-        <section className='tickets'>
-          <TicketsFilter chooseCheap={chooseCheap}/>  
-          <>
-            {tickets.filter((item, idx) => 
-               idx < ticketsNum).map((ticket) => ( 
-              <TicketsItem ticket={ticket}/>
-            ))}
-          </> 
+  return ( 
+      <div className="container">
+        <Header />
+          <TicketsDates />
+          <main>
+            <Filter chooseTrans={chooseTrans}/>
+            <section className='tickets'>
+              <TicketsFilter
+               chooseCheap={chooseCheap}/>  
+              <TicketsList 
+              />
               <TikcetsAdd clickHandler={clickHandler}/>
-        </section>  
-      </main>
-    </div>
+            </section>  
+          </main>
+      </div>
   );
 }
 
