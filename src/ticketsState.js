@@ -9,54 +9,70 @@ export const fetchTickets = createAsyncThunk(
     }   
 )
 
+export const fetchCompanies = 
+createAsyncThunk(
+    'companies/fetchCompanies',
+    async () => {
+        const response = await fetch('https://api.npoint.io/a1b1c28b32d9785bb26c');
+        const formattedResponse = await response.json();
+        return formattedResponse;
+    }
+)
+
 export const ticketsSlice = createSlice({
     name: 'tickets',
     initialState: {
         tickets: [],
+        companies: [{ id: "876218723879",
+    name: 'Все'}],
         isLoading: false,
-        isChanged: false,
+        isCheap: false,
+        isFast: false,
+        isOptimal: false,
     },
     reducers: {
         chooseCheap(state) {
-            if(state.isChanged) {
-                state.isChanged = !state.isChanged;
+            if(state.isCheap === false) {
                 state.tickets.sort((prev, next) => prev.price - next.price);
-                console.log(state.isChanged);
+                console.log("now it's cheap");
+                state.isCheap = !state.isCheap;
+                state.isFast = false;
+                state.isOptimal = false;
             } else {
-                state.isChanged = !state.isChanged;
-                fetchTickets();
-                state.tickets.sort((prev, next) => prev.price - next.price);
-                console.log(state.isChanged);
-            }
+                console.log("it's already cheap!");
+                return state;
+            }            
         },
         chooseFast(state) {
-            if(state.isChanged) {
-                state.isChanged = !state.isChanged;
+            if(state.isFast === false) {
                 state.tickets.sort((prev, next) => prev.info.duration < next.info.duration ? -1 : 1);
-                console.log(state.isChanged);
+                console.log("now it's fast");
+                state.isFast = !state.isFast;
+                state.isCheap = false;
+                state.isOptimal = false;
             } else {
-                state.isChanged = !state.isChanged;
-                fetchTickets();
-                state.tickets.sort((prev, next) => prev.info.duration < next.info.duration ? -1 : 1);
-                console.log(state.isChanged);
+                console.log("it's already fast!");
             }
         },
         chooseOptimal(state) {
-            if(state.isChanged) {
-                state.isChanged = !state.isChanged;         
-                state.tickets.sort((prev, next) => prev.price < next.price ? 1 : -1).sort((prev, next) => prev.info.duration < next.info.duration ? 1 : -1);
-                console.log(state.isChanged);
-            } else {
-                state.isChanged = !state.isChanged;
-                fetchTickets();
-                state.tickets.sort((prev, next) => prev.price < next.price ? 1 : -1).sort((prev, next) => prev.info.duration < next.info.duration ? 1 : -1);
-                console.log(state.isChanged);
+            if(state.isOptimal === false) {
+                state.tickets.sort((prev, next) => next.price - prev.price).sort((prev, next) => prev.info.duration < next.info.duration ? -1 : 1);
+                console.log("now it's optimal");
+                state.isOptimal = !state.isOptimal;
+                state.isCheap = false;
+                state.isFast = false;
             }
         },
         chooseTrans(state, payload) {
-            state.tickets.filter(item => item.info.stops.length === 2);
-            console.log(state);
-        }
+            state.tickets = state.tickets.filter(item => item.info.stops.length === payload.payload);
+        },
+        chooseCompany(state, payload) {
+            state.tickets = state.tickets.filter(item => item.companyId === payload.payload)
+        },
+        // filterOrigin(state, payload) {
+        //     state.tickets = state.tickets.filter(item => item.info.origin.includes(payload.payload));
+        //     console.log(payload.value);
+        // }
     },
     extraReducers: {
         [fetchTickets.pending]: (state) => {
@@ -69,16 +85,12 @@ export const ticketsSlice = createSlice({
         [fetchTickets]: (state) => {
             state.isLoading = false;
         },
-        [fetchTickets]: (state) => {
-            state.tickets.forEach(item => {
-                let unix = item.info.duration;
-                let date = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(unix)//9:27:16 PM
-                console.log(date);
-            })
+        [fetchCompanies.fulfilled]: (state, action) => {
+            action.payload.forEach(item => state.companies.push(item));
         }
     }
 });
 
 export default ticketsSlice.reducer;
 
-export const { chooseCheap, chooseFast, chooseOptimal, chooseTrans } = ticketsSlice.actions;
+export const { chooseCheap, chooseFast, chooseOptimal, chooseTrans, filterOrigin, chooseCompany } = ticketsSlice.actions;

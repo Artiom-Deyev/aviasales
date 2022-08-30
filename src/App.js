@@ -7,6 +7,7 @@ import TicketsFilter from './components/TicketsFilter';
 import TicketsList from './components/TicketsList';
 import TikcetsAdd from './components/TikcetsAdd';
 import TicketsDates from './components/TicketsDates';
+//import Calendar from 'react-calendar';
 import axios from 'axios';
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
       <div className="container">
         <Header />
           <TicketsDates />
+          {/* <Calendar onChange={onChange} value={value} /> */}
           <main>
             <Filter chooseTrans={chooseTrans}/>
             <section className='tickets'>
