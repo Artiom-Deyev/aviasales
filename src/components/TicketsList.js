@@ -15,14 +15,10 @@ const TicketsList = () => {
     dispatch(fetchTickets())
   }, [dispatch]);
 
-  // console.log(tickets.tickets.forEach(item => {
-  //   let unix = item.info.duration;
-  //   let date = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(unix)//9:27:16 PM
-  //   //console.log(date);
-  // }))
-
   //Show more tickets
   const num = useSelector(state => state.add.add)
+
+  //console.log(tickets)
 
   return (
     <>
@@ -31,12 +27,6 @@ const TicketsList = () => {
         <TicketsItem ticket={ticket}  key={uuidv4()}/>
         ))}
     </>
-
-    // <>
-    //     {tickets.tickets.map((ticket) => (
-    //         <TicketsItem ticket={ticket} />
-    //     ))}
-    // </>
   )
 }
 
